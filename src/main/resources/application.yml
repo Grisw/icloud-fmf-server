@@ -6,6 +6,14 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_SERVERS:http://localhost:8081/eureka}
 
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        readTimeout: 3000
+
 spring:
   application:
     name: icloud-fmf-server

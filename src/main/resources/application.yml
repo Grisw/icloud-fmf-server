@@ -12,7 +12,15 @@ feign:
   client:
     config:
       default:
-        readTimeout: 3000
+        readTimeout: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
 
 spring:
   application:

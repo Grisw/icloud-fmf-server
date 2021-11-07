@@ -1,12 +1,12 @@
 package coo.lxt.island.server.icloud.fmf.controller;
 
 import coo.lxt.island.common.exception.ValidateException;
-import coo.lxt.island.common.icloud.api.IICloudApi;
+import coo.lxt.island.common.icloud.api.IICloudAuthApi;
 import coo.lxt.island.common.icloud.vo.ICloudAuthWithTokenVO;
 import coo.lxt.island.common.icloud.vo.ICloudHSA2VO;
 import coo.lxt.island.common.icloud.vo.ICloudLoginVO;
 import coo.lxt.island.common.icloud.vo.ICloudTrustSessionVO;
-import coo.lxt.island.server.icloud.fmf.feign.IICloudService;
+import coo.lxt.island.server.icloud.fmf.feign.IICloudAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class FmfController {
 
     @Autowired
-    private IICloudService iCloudService;
+    private IICloudAuthService iCloudService;
 
     @GetMapping("/login")
     @ResponseBody
-    public IICloudApi.LoginStatus login(@RequestParam String accountName, @RequestParam String password) throws Exception {
+    public IICloudAuthApi.LoginResult login(@RequestParam String accountName, @RequestParam String password) throws Exception {
         try {
             return iCloudService.login(new ICloudLoginVO(accountName, password));
         } catch (ValidateException e) {

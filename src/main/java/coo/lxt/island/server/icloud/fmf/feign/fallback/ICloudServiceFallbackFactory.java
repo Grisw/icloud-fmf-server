@@ -4,22 +4,22 @@ import coo.lxt.island.common.icloud.vo.ICloudAuthWithTokenVO;
 import coo.lxt.island.common.icloud.vo.ICloudHSA2VO;
 import coo.lxt.island.common.icloud.vo.ICloudLoginVO;
 import coo.lxt.island.common.icloud.vo.ICloudTrustSessionVO;
-import coo.lxt.island.server.icloud.fmf.feign.IICloudService;
+import coo.lxt.island.server.icloud.fmf.feign.IICloudAuthService;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ICloudServiceFallbackFactory implements FallbackFactory<IICloudService> {
+public class ICloudServiceFallbackFactory implements FallbackFactory<IICloudAuthService> {
 
     @Override
-    public IICloudService create(Throwable throwable) {
+    public IICloudAuthService create(Throwable throwable) {
         log.error("Hystrix fallback.", throwable);
-        return new IICloudService() {
+        return new IICloudAuthService() {
             @Override
-            public LoginStatus login(ICloudLoginVO authVO) throws Exception {
-                return LoginStatus.TRY_LATER;
+            public LoginResult login(ICloudLoginVO authVO) throws Exception {
+                return new LoginResult(LoginStatus.TRY_LATER, null);
             }
 
             @Override
